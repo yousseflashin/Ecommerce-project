@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>{{totalNumberOfCustomer}}</h1>
+  <h1>{{totalPrice}}</h1>
+  <h1>{{minPrice}}</h1>
+  <h1>{{maxPrice}}</h1>
+  <!--<h1>{{product.title}},{{product.unit_price}}</h1>-->
+  <ul>
+    {% for order in orders %}
+     <li>{{ order.placed_at}} , {{ order.customer.first_name}}  </li>
+     
+    {% endfor %}
+  </ul>
+  befasnkfskfsa;fslkf
+</body>
+</html>
