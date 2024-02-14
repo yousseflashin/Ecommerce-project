@@ -11,6 +11,7 @@ from tags.models import Tag ,TaggedItem
 from . import models
 
 class InventoryFilter(admin.SimpleListFilter):
+   
    title='inventory'
    parameter_name='inventory'
    
@@ -78,6 +79,7 @@ class AdminCustomer(admin.ModelAdmin):
 
 @admin.register(models.Collection)
 class AdminCollection(admin.ModelAdmin):
+
   search_fields=['title']
   autocomplete_fields=['featured_product']
   list_display=['title','products_count']
@@ -94,10 +96,12 @@ class AdminCollection(admin.ModelAdmin):
 
 @admin.register(models.Cart)
 class AdminCart(admin.ModelAdmin):
+
   list_display=[]
 
 
 class OrderItemLine(admin.TabularInline):
+
   model=models.OrderItem
   autocomplete_fields=['product']
   extra=1
@@ -105,6 +109,7 @@ class OrderItemLine(admin.TabularInline):
 
 @admin.register(models.Order)
 class AdminOrder(admin.ModelAdmin):
+
   autocomplete_fields=['customer']
   inlines=[OrderItemLine]
   list_display=['customer','payment_status','placed_at']
