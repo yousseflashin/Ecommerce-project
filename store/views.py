@@ -5,51 +5,35 @@ from rest_framework import response,decorators,status
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework.viewsets import ModelViewSet
-from .models import Collection, Product
+from .models import Collection, Product,OrderItem
 from .serializers import ProductSerializer,CollectionSerializer
 # Create your views here.
 
 
-
-class ProductList(ListCreateAPIView):
-  
+class ProductViewSet(ModelViewSet):
+    
     queryset= Product.objects.select_related('collection').all()
-
     serializer_class=ProductSerializer
 
     def get_serializer_context(self):
       return {'request': self.request}
-     
+    
+    def destroy(self, request, *args, **kwargs):
 
-
-
-
-class ProductDetails(RetrieveUpdateDestroyAPIView):
+      if OrderItem.objects.filter(Product_id=kwargs['pk']).count() > 0:
+      
+         return response.Response({'error':'product cannot be deleted because it is associated with an order item'},status=status.HTTP_405_METHOD_NOT_ALLOWED)
+      return super().destroy(request, *args, **kwargs)
+    
    
-   queryset=Product.objects.all()
-   serializer_class=ProductSerializer
-   def get_serializer_context(self):
-      return {'request': self.request}
+
+class CollectionViewSet(ModelViewSet):
    
-   def delete(self,request,pk):
-     product=get_object_or_404(Product,pk=pk)
-     if product.orderitem_set.count() > 0:   
-       product.delete()
-       return response.Response({'error':'product cannot be deleted because it is associated with an order item'},status=status.HTTP_405_METHOD_NOT_ALLOWED)
-     
-
-
-class CollectionList(ListCreateAPIView):
-
-  queryset=Collection.objects.annotate(products_count=Count('product')).select_related('featured_product').all()
+  queryset=Collection.objects.select_related('featured_product').annotate(products_count=Count('product')).all()
   serializer_class=CollectionSerializer
+  
   def get_serializer_context(self):
       return {'request': self.request}
-  
-
-class CollectionDetails(RetrieveUpdateDestroyAPIView):
-  queryset=Collection.objects.annotate(products_count=Count('product')).all()
-  serializer_class=CollectionSerializer
 
   def delete(self,request,pk):
     collections=get_object_or_404(Collection.objects.annotate(products_count=Count('product')),pk=pk)

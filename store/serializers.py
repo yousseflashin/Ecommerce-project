@@ -10,10 +10,10 @@ class CollectionSerializer(serializers.ModelSerializer):
   
   products_count = serializers.IntegerField(read_only=True)
   
-  featured_product = serializers.HyperlinkedRelatedField(
-    queryset=Product.objects.all(),
-    view_name='collection_products'
-  )
+  #featured_product = serializers.HyperlinkedRelatedField(
+  #  queryset=Product.objects.all(),
+  #  view_name='collection_products'
+  #)
 
 
 
@@ -29,10 +29,10 @@ class ProductSerializer(serializers.ModelSerializer):
   #collection=serializers.PrimaryKeyRelatedField( queryset=Collection.objects.all() )
   #collection=serializers.StringRelatedField()
   #collection=CollectionSerializer()
-  collection = serializers.HyperlinkedRelatedField(
-    queryset=Collection.objects.all(),
-    view_name='collection_detail'
-  )
+  #collection = serializers.HyperlinkedRelatedField(
+  #  queryset=Collection.objects.all(),
+  #  view_name='collection_detail'
+  #)
   
   def calculated_Tax(self,product:Product):
     return product.unit_price * Decimal(1.1)
