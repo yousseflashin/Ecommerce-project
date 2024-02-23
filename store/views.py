@@ -5,8 +5,8 @@ from rest_framework import response,decorators,status
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework.viewsets import ModelViewSet
-from .models import Collection, Product,OrderItem
-from .serializers import ProductSerializer,CollectionSerializer
+from .models import Collection, Product,OrderItem,Review
+from .serializers import ProductSerializer,CollectionSerializer,ReviewSerializer
 # Create your views here.
 
 
@@ -52,6 +52,8 @@ def collection_products(request,pk):
   return response.Response(serializer.data)
 
 
-
+class ReviewViewSet(ModelViewSet):
+   queryset=Review.objects.all()
+   serializer_class = ReviewSerializer
 
 
