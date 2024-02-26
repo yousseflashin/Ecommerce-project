@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
 from django.db.models.aggregates import Count
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter,OrderingFilter
 from rest_framework import response,decorators,status
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
@@ -18,12 +18,10 @@ class ProductViewSet(ModelViewSet):
     
     queryset= Product.objects.all()
     serializer_class=ProductSerializer
-
-    filter_backends=[DjangoFilterBackend,SearchFilter]
-    filterset_fields=['collection_id','unit_price']
+    filter_backends=[DjangoFilterBackend,SearchFilter,OrderingFilter]
     filterset_class=ProductFilter
-    search_fields=['title','description','collection__title ']
-    
+    search_fields=['title','description','collection__title']
+    ordering_fields = ['unit_price','last_update']
     def get_serializer_context(self):
       return {'request': self.request}
     
