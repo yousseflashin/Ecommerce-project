@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework.viewsets import ModelViewSet,GenericViewSet
-from rest_framework.mixins import CreateModelMixin,ListModelMixin,RetrieveModelMixin
+from rest_framework.mixins import CreateModelMixin,DestroyModelMixin,RetrieveModelMixin
 from .filters import ProductFilter
 from .models import Cart, Collection, Product,OrderItem,Review,CartItem
 from .serializers import ProductSerializer,CollectionSerializer,ReviewSerializer,CartSeralizer,CartItemSeralizer
@@ -69,7 +69,9 @@ class ReviewViewSet(ModelViewSet):
 
 
 class CartViewSet(CreateModelMixin,
-                  RetrieveModelMixin,GenericViewSet):
+                  RetrieveModelMixin,
+                  DestroyModelMixin,
+                  GenericViewSet):
    queryset = Cart.objects.prefetch_related('cartitem_set__product').all()
    serializer_class = CartSeralizer
 
