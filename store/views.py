@@ -9,9 +9,9 @@ from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework.viewsets import ModelViewSet,GenericViewSet
-from rest_framework.mixins import CreateModelMixin
+from rest_framework.mixins import CreateModelMixin,ListModelMixin,RetrieveModelMixin
 from .filters import ProductFilter
-from .models import Cart, Collection, Product,OrderItem,Review
+from .models import Cart, Collection, Product,OrderItem,Review,CartItem
 from .serializers import ProductSerializer,CollectionSerializer,ReviewSerializer,CartSeralizer,CartItemSeralizer
 from .pagination import DefaultPagination
 # Create your views here.
@@ -68,6 +68,13 @@ class ReviewViewSet(ModelViewSet):
    serializer_class = ReviewSerializer
 
 
-class CartViewSet(CreateModelMixin,GenericViewSet):
-   queryset = Cart.objects.all()
+class CartViewSet(CreateModelMixin,
+                  RetrieveModelMixin,GenericViewSet):
+   queryset = Cart.objects.prefetch_related('cartitem_set__product').all()
    serializer_class = CartSeralizer
+
+
+
+class CartItemViewSet(RetrieveModelMixin,GenericViewSet):
+   queryset= CartItem.objects.all()
+   serializer_class=CartItemSeralizer
