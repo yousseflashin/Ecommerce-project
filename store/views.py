@@ -77,6 +77,7 @@ class CartViewSet(CreateModelMixin,
 
 
 
-class CartItemViewSet(RetrieveModelMixin,GenericViewSet):
-   queryset= CartItem.objects.all()
+class CartItemViewSet(ModelViewSet):
+   def get_queryset(self):
+      return CartItem.objects.filter(cart_id=self.kwargs['cart_pk']).select_related('product')
    serializer_class=CartItemSeralizer

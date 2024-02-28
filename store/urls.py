@@ -4,16 +4,20 @@ from rest_framework_nested import routers
 from . import views
 #URLConf
 route=DefaultRouter()
-route.register('products',views.ProductViewSet,basename='products')
-route.register('collections',views.CollectionViewSet)
-route.register('carts',views.CartViewSet)
-#route.register('cartsItem',views.CartItemSeralizer,basename='cartsItem')
+route.register('products',views.ProductViewSet,basename='product_route')
+route.register('collections',views.CollectionViewSet,basename='collection_route')
+route.register('carts',views.CartViewSet,basename='cart_route')
 
 product_router = routers.NestedDefaultRouter(route,'products',lookup='product') 
 product_router.register('reviews',views.ReviewViewSet,basename='product-reviews')
+
+carts_router=routers.NestedDefaultRouter(route,'carts',lookup='cart')
+carts_router.register('items',views.CartItemViewSet,basename='cart-item-list')
+
 urlpatterns = [
   path('',include(route.urls)),
   path('',include(product_router.urls)),
+  path('',include(carts_router.urls)),
   #path('collection_products/<int:pk>/',views.collection_products,name='collection_products'),
 
 ] 
