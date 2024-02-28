@@ -64,7 +64,13 @@ class CartItemSeralizer(serializers.ModelSerializer):
 
   def total_item_price(self,cart_item:CartItem):
       return cart_item.quantity * cart_item.product.unit_price
+  
+class UpdateCartItemSerializer(serializers.ModelSerializer):
+  class Meta:
+    model=CartItem
+    fields=['quantity']
 
+  
 class AddCartItemSerializer(serializers.ModelSerializer):
   class Meta:
     model=CartItem
