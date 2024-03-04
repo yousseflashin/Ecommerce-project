@@ -61,13 +61,12 @@ class AdminProduct(admin.ModelAdmin):
 
 @admin.register(models.Customer)
 class AdminCustomer(admin.ModelAdmin):
-
   list_display=['first_name' ,'last_name','email','phone','birth_date','membership','order_count']
   list_editable=['membership']
   list_per_page=20
-  ordering=['first_name','last_name']
+  ordering=['user__first_name','user__last_name']
   search_fields=['first_name__istartswith','last_name__istartswith']
-
+  autocomplete_fields=['user']
   @admin.display(ordering='order_count')
   def order_count(self,customer):
     url=(reverse('admin:store_order_changelist') + '?' +  urlencode({'customer__id':str(customer.id)})) 
