@@ -101,6 +101,11 @@ class Order(models.Model):
 
   def __str__(self) -> str :
     return str(self.placed_at)
+  
+ 
+  class Meta:
+     permissions=[('cancel_order','can cancel order')]
+
 
   
 
