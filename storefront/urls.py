@@ -43,8 +43,7 @@ from store import urls
 admin.site.site_header='storefront Admin'
 admin.site.index_title='Admin'
 
-route=DefaultRouter()
-route.register('store',urls,basename='product_route')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
