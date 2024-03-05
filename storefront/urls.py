@@ -37,13 +37,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 import debug_toolbar
-
+from rest_framework.routers import SimpleRouter,DefaultRouter
+from rest_framework_nested import routers
+from store import urls
 admin.site.site_header='storefront Admin'
 admin.site.index_title='Admin'
 
+route=DefaultRouter()
+route.register('store',urls,basename='product_route')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
     path('store/',include('store.urls')),
     path('playground/',include('playground.urls')),
+    path('auth/',include('djoser.urls')),
+    path('auth/',include('djoser.urls.jwt')),
 ]
+
+
