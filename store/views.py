@@ -2,7 +2,8 @@ from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
 from django.db.models.aggregates import Count
 from django_filters.rest_framework import DjangoFilterBackend
-
+from rest_framework.permissions import IsAuthenticated,AllowAny
+from rest_framework.decorators import action
 from rest_framework import response,decorators,status
 from rest_framework.filters import SearchFilter,OrderingFilter
 from rest_framework.views import APIView
@@ -100,3 +101,20 @@ class CartItemViewSet(ModelViewSet):
 class CustomerViewSet(CreateModelMixin,RetrieveModelMixin,UpdateModelMixin,GenericViewSet):
    queryset =  Customer.objects.all()
    serializer_class = CustomerSeralizer
+   permission_classes = [IsAuthenticated]
+   def get_permissions(self):
+      if self.request.method == 'GET':
+        return [AllowAny()]
+      return [IsAuthenticated()]
+   
+   @action(detail=False,methods=['GET','PUT'])
+   def me(self,request):
+      (customer,created)=Customer.objects.get_or_create(user_id=request.user.id)
+      if request.method =='GET':
+         serializer = CustomerSeralizer(customer)
+         return response.Response(serializer.data)
+      elif request.method=='PUT':
+         serializer = CustomerSeralizer(customer,data=request.data)
+         serializer.is_valid(raise_exception=True)
+         serializer.save()
+         return response.Response(serializer.data)
