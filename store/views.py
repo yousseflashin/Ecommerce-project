@@ -9,10 +9,10 @@ from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
 from rest_framework.viewsets import ModelViewSet,GenericViewSet
-from rest_framework.mixins import CreateModelMixin,DestroyModelMixin,RetrieveModelMixin
+from rest_framework.mixins import CreateModelMixin,DestroyModelMixin,RetrieveModelMixin,UpdateModelMixin
 from .filters import ProductFilter
-from .models import Cart, Collection, Product,OrderItem,Review,CartItem
-from .serializers import ProductSerializer,CollectionSerializer,ReviewSerializer,CartSeralizer,AddCartItemSerializer,CartItemSeralizer,UpdateCartItemSerializer
+from .models import Cart, Collection, Product,OrderItem,Review,CartItem,Customer
+from .serializers import CustomerSeralizer, ProductSerializer,CollectionSerializer,ReviewSerializer,CartSeralizer,AddCartItemSerializer,CartItemSeralizer,UpdateCartItemSerializer
 from .pagination import DefaultPagination
 # Create your views here.
 
@@ -94,3 +94,9 @@ class CartItemViewSet(ModelViewSet):
 
    def get_queryset(self):
       return CartItem.objects.filter(cart_id=self.kwargs['cart_pk']).select_related('product')
+
+
+
+class CustomerViewSet(CreateModelMixin,RetrieveModelMixin,UpdateModelMixin,GenericViewSet):
+   queryset =  Customer.objects.all()
+   serializer_class = CustomerSeralizer
