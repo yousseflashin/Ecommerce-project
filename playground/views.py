@@ -6,10 +6,14 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models.functions import Concat
 from django.db import transaction
 from django.db import connection
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from store.models import Product,OrderItem,Customer,Order,Collection,Pormotion
 from tags.models import TaggedItem
 
 #@transaction.atomic()
+@api_view()
 def say_hello(request):
   
  #query_set = Product.objects.filter(unit_price__range=(10,60))
@@ -125,4 +129,4 @@ def say_hello(request):
      #'maxPrice':maxPrice,
   
  }
- return render(request,'hello.html',context)
+ return render(request,'hello.html')
