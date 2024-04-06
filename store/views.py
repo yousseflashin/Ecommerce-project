@@ -14,15 +14,26 @@ from rest_framework.mixins import CreateModelMixin,DestroyModelMixin,RetrieveMod
 
 from .permission import ISAdminOrReadOnly, ViewCustomerHistoryPermission
 from .filters import ProductFilter
-from .models import Cart, Collection, Order, Product,OrderItem,Review,CartItem,Customer
-from .serializers import CreateOrderSerializer, CustomerSeralizer, OrderSerializers, ProductSerializer,CollectionSerializer,ReviewSerializer,CartSeralizer,AddCartItemSerializer,CartItemSeralizer,UpdateCartItemSerializer, UpdateOrderSerializer
-from .pagination import DefaultPagination
+from .models import Cart, Collection, Order, Product,OrderItem, ProductImage,Review,CartItem,Customer
+from .serializers import CreateOrderSerializer, CustomerSeralizer, OrderSerializers, ProductImageSerializer, ProductSerializer,CollectionSerializer,ReviewSerializer,CartSeralizer,AddCartItemSerializer,CartItemSeralizer,UpdateCartItemSerializer, UpdateOrderSerializer
+from .pagination import DefaultPagination 
 # Create your views here.
+
+class ProductImageViewSet(ModelViewSet):
+   
+
+   def get_serializer_context(self):
+      return {'product_id':self.kwargs['product_pk']}
+     
+   def get_queryset(self):
+      return ProductImage.objects.filter(product_id=self.kwargs['product_pk'])
+
+   serializer_class=ProductImageSerializer
 
 
 class ProductViewSet(ModelViewSet):
     
-    queryset= Product.objects.all()
+    queryset= Product.objects.prefetch_related('image').all()
     serializer_class=ProductSerializer
     filter_backends=[DjangoFilterBackend,SearchFilter,OrderingFilter]
     permission_classes = [ISAdminOrReadOnly]
