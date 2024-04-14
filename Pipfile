@@ -15,6 +15,7 @@ django-cors-headers = "*"
 django-templated-mail = "*"
 redis = "*"
 djoser = "*"
+celery = "*"
 
 [dev-packages]
 
