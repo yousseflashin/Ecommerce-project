@@ -32,10 +32,10 @@ class CollectionSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-  images = ProductImageSerializer(many=True)
+  images = ProductImageSerializer(many=True,read_only=True)
   class Meta:
     model = Product
-    fields=['id','title','description','slug','inventory','unit_price','unit_price_with_tax','collection']
+    fields=['id','title','description','slug','inventory','unit_price','unit_price_with_tax','collection','images']
 
   unit_price_with_tax=serializers.SerializerMethodField(method_name='calculated_Tax')
 
