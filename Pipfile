@@ -14,10 +14,7 @@ pillow = "*"
 django-cors-headers = "*"
 django-templated-mail = "*"
 redis = "*"
-<<<<<<< HEAD
 djoser = "*"
-=======
->>>>>>> 2524bd8b11a92f91b01009e2bf6749044b5b7cf9
 
 [dev-packages]
 
