@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'playground',
     'debug_toolbar',
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -66,6 +68,12 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+CORS_ALLOWED_ORIGINS =[
+  'http://localhost:8001',
+  'http://127.0.0.1:8001',
+]
+
 
 ROOT_URLCONF = 'storefront.urls'
 
@@ -177,3 +185,15 @@ DJOSER = {
     'current_user':'core.serializers.UserSerializer'
   }
 }
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_HOST_USER=''
+EMAIL_HOST_PASSWORD=''
+EMAIL_PORT = 2525
+DEFAULT_FROM_EMAIL='from@store.com'
+
+ADMINS = [
+  ('Youssef','admin@store.com')
+]

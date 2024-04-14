@@ -6,6 +6,11 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models.functions import Concat
 from django.db import transaction
 from django.db import connection
+
+from django.core.mail import send_mail,mail_admins,BadHeaderError,EmailMessage
+
+from templated_mail.mail import BaseEmailMessage 
+
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -15,7 +20,21 @@ from tags.models import TaggedItem
 #@transaction.atomic()
 @api_view()
 def say_hello(request):
-  
+ try:
+    #send_mail('subject','message','info@store.com',['youssef.mlashin@gmail.com'])
+    #mail_admins('subject','message',html_message='message')
+    #message=EmailMessage('subject','message','from@store.com',['youssef.mlashin@gmail.com'])
+    #message.attach_file('playground/static/images/Capture.PNG')
+    #message.send()
+    message = BaseEmailMessage(
+      template_name='emails/hello.html',
+      context={'name':'youssef'}
+    )
+    message.send(['youssef.mlashin@gmail.com'])
+ except BadHeaderError:
+   pass
+ 
+
  #query_set = Product.objects.filter(unit_price__range=(10,60))
  #query_set = Product.objects.filter(unit_price__gt=50)
  #query_set = Product.objects.filter(unit_price__lt=50)
@@ -120,7 +139,7 @@ def say_hello(request):
  #with connection.cursor() as cursor:
   # cursor.callproc('get_customers',[1,2,'a'])
 
- context={
+ #context={
      #'product':product
      #'orders':list(query_set)
      #'totalNumberOfCustomer':totalNumberOfCustomer,
@@ -128,5 +147,5 @@ def say_hello(request):
      #'minPrice':minPrice,
      #'maxPrice':maxPrice,
   
- }
+ #}
  return render(request,'hello.html')

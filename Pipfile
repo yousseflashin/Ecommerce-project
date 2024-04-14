@@ -11,6 +11,10 @@ djangorestframework = "*"
 drf-nested-routers = "*"
 django-filter = "*"
 pillow = "*"
+django-cors-headers = "*"
+django-templated-mail = "*"
+redis = "*"
+djoser = "*"
 
 [dev-packages]
 

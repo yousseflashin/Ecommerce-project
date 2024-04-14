@@ -24,6 +24,13 @@ class InventoryFilter(admin.SimpleListFilter):
      if self.value()=='<10':
         return queryset.filter(inventory__lt=10)
      
+class ProductImageInline(admin.TabularInline):
+  model = models.ProductImage
+  readonly_fields = ['thumbnail']
+  def thumbnail(self,instance):
+    if instance.image.name !='':
+      return format_html(f'<img src="{instance.image.url}" class="thumbnail"/>')
+    return ''
 
 # Register your models here.
 @admin.register(models.Product)
@@ -35,6 +42,7 @@ class AdminProduct(admin.ModelAdmin):
     'slug':['title']
   }
   actions=['clear_inventory']
+  inlines=[ProductImageInline]
   list_display=['title', 'unit_price', 'inventory_status' ,'last_update' ,'collection', 'slug']
   list_editable=['unit_price']
   list_select_related=['collection']
@@ -51,6 +59,11 @@ class AdminProduct(admin.ModelAdmin):
         messages.ERROR,
        
     )
+
+  class Media:
+      css={
+        'all':['store/styles.css']
+      }
 
   @admin.display(ordering='inventory')
   def inventory_status(self,product):
