@@ -16,13 +16,13 @@ from rest_framework.response import Response
 
 from store.models import Product,OrderItem,Customer,Order,Collection,Pormotion
 from tags.models import TaggedItem
-
+import requests
 from .task import notify_customers
 #@transaction.atomic()
-@api_view()
+#@api_view()
 def say_hello(request):
 
     
-  
-  notify_customers.delay('hello')
+  requests.get('https://httpbin.org/delay/2')
+  #notify_customers.delay('hello')
   return render(request,'hello.html')
