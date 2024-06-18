@@ -20,15 +20,22 @@ from rest_framework.views import APIView
 from store.models import Product,OrderItem,Customer,Order,Collection,Pormotion
 from tags.models import TaggedItem
 import requests
+import logging
 from .task import notify_customers
 #@transaction.atomic()
 #@api_view()
+logger = logging.getLogger(__name__)
 class HelloView(APIView):
-    @method_decorator(cache_page(5*60))
+   # @method_decorator(cache_page(5*60))
     def get(self,request):
+       try:
+         logger.info('Calling httpbin')
          response=requests.get('https://httpbin.org/delay/2')
+         logger.info('Recived the response')
          data = response.json()
-         return render(request,'hello.html')
+       except requests.ConnectionError:
+         logger.critical('httpbin is offline')
+       return render(request,'hello.html')
 
         
 
