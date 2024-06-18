@@ -31,8 +31,8 @@ CACHES = {
 
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+'''EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ['SMTP_SERVER']
 EMAIL_HOST_USER=os.environ['SMTP_LOGIN']
 EMAIL_HOST_PASSWORD=os.environ['SMTP_PASSWORD']
-EMAIL_PORT = os.environ['SMTP_PORT']
+EMAIL_PORT = os.environ['SMTP_PORT']'''
