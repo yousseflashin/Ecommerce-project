@@ -1,0 +1,22 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="90" fill="#0F0F0F" stroke="#00FFAB" stroke-width="5"/>
+
+  <!-- E-commerce Cart Icon -->
+  <g fill="none" stroke="#00FFAB" stroke-width="5">
+    <path d="M60 60 H150 L140 120 H80 Z" />
+    <circle cx="85" cy="140" r="10" />
+    <circle cx="125" cy="140" r="10" />
+  </g>
+
+  <!-- Futuristic Elements -->
+  <g fill="none" stroke="#00FFAB" stroke-width="2">
+    <path d="M100 30 L130 70" />
+    <path d="M100 30 L70 70" />
+    <path d="M30 100 L70 130" />
+    <path d="M170 100 L130 130" />
+  </g>
+
+  <!-- Branding Text -->
+  <text x="50%" y="180" fill="#00FFAB" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">FutureShop</text>
+</svg>
