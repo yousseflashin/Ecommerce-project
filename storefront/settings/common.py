@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'djoser',
-    #'silk',
+    'silk',
     'debug_toolbar',
     'playground',
     'store',
@@ -58,8 +58,7 @@ MIDDLEWARE = [
     
 ]
 
-'''if DEBUG:
-   MIDDLEWARE+=['silk.middleware.SilkyMiddleware',]'''
+
 
 INTERNAL_IPS = [
     # ...
