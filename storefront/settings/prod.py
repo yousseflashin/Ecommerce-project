@@ -10,7 +10,7 @@ ALLOWED_HOSTS = ['ecommerce-project-7ns7.onrender.com']
 
 
 DATABASES = {  
-    'default': dj_database_url.config('')
+    'default': dj_database_url.config()
 }  
 
 REDIS_URL=['REDIS_URL']
