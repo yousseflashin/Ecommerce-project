@@ -20,9 +20,6 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path,include
 import debug_toolbar
-from rest_framework.routers import SimpleRouter,DefaultRouter
-from rest_framework_nested import routers
-from store import urls
 admin.site.site_header='storefront Admin'
 admin.site.index_title='Admin'
 
